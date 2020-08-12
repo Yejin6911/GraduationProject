@@ -6,4 +6,5 @@ app_name = 'map'
 
 urlpatterns = [
     path('', views.main, name='main'),
+    path('login/', views.login, name='login'),
 ]
