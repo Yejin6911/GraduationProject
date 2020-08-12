@@ -1,16 +1,40 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="container-fluid">
-        <div id="map" style="width:100%;height:90%;margin:5px;"></div>
-    </div>
-    <script>
-        var mapOptions = {
-            center: new naver.maps.LatLng(37.3595704, 127.105399),
+<div class="container-fluid">
+    <div id="map" style="width:100%;height:90%;margin:5px;"></div>
+</div>
+<script>
+    {% for i in data %}
+        var map = new naver.maps.Map('map',{
+            center: new naver.maps.LatLng( 37.5617306, 126.94367550000001),
             zoom: 15
-        };
+        });
+        var position = new naver.maps.LatLng({{i.10}}, {{ i.11 }});
+        var marker = new naver.maps.Marker({
+                map: map,
+                position : position
+        });
 
-        var map = new naver.maps.Map('map', mapOptions);
-    </script>
+        var contentString = [
+            '<div class="iw_inner">',
+            '<h5>{{ i.2 }}</h5></br>',
+            '<a href="https://www.naver.com" target="_blank">www.naver.com</a>',
+            '</div>'
+        ].join('');
+
+        var infowindow = new naver.maps.InfoWindow({
+            content: contentString
+        })
+
+        naver.maps.addEventListener(marker,'click',function (e){
+            if(infowindow.getMap()){
+                infowindow.close();
+            } else {
+                infowindow.open(map,marker);
+            }
+        });
+    {% endfor %}
+</script>
 {% endblock %}
 
 
