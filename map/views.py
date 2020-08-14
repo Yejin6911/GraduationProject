@@ -1,11 +1,21 @@
 from django.shortcuts import render
+from django.contrib.auth.models import User
+
+import os
+
+path = str(os.getcwd()) + "\map\static\data.csv"
+f = open(path, "r", encoding='cp949')
+lines = f.readlines()
+l = []
+for line in lines:
+    l.append(line.split(','))
+f.close()
+data = l[1:]
 
 
-# Create your views here.
 def main(request):
-    time = request.session.get_expiry_age()
-    print(time)
-    return render(request, "map/main.html")
+    return render(request, "map/main.html", {'data': data})
 
-def login(request):
-    return render(request, "map/login.html")
+
+def cctv(request):
+    return render(request, "map/cctv.html")

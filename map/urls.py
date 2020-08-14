@@ -1,10 +1,10 @@
 from django.urls import path, include
 
-from map import views
+from . import views
 
 app_name = 'map'
 
 urlpatterns = [
     path('', views.main, name='main'),
-    path('login/', views.login, name='login'),
+    path('cctv/', views.cctv, name='cctv'),
 ]
