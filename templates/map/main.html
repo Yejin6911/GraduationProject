@@ -20,9 +20,8 @@
 
         var infoWindow = new naver.maps.InfoWindow({
             content:
-                '<a href="" style="width:auto;text-align:center;padding:10px;"><b>"{{ i.2 }}"</b></a>'
+                '<a href="{% url "map:cctv" %}" target="_blank" style="width:auto;text-align:center;padding:10px;"><b>"{{ i.2 }}"</b></a>'
         });
-
         markers.push(marker);
         infoWindows.push(infoWindow);
     {% endfor %}
@@ -79,6 +78,5 @@
 
 </script>
 {% endblock %}
-
 
 
