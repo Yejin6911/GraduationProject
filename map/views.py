@@ -1,7 +1,10 @@
 from django.shortcuts import render
+from django.contrib.auth.models import User
 
+import os
 
-f = open("/Users/jangbomin/dev/GraduationProject/map/static/data.csv","r", encoding='cp949')
+path = str(os.getcwd()) + "\map\static\data.csv"
+f = open(path, "r", encoding='cp949')
 lines = f.readlines()
 l = []
 for line in lines:
@@ -9,7 +12,10 @@ for line in lines:
 f.close()
 data = l[1:]
 
+
 def main(request):
-    time = request.session.get_expiry_age()
-    print(time)
-    return render(request, "map/main.html", {'data':data})
+    return render(request, "map/main.html", {'data': data})
+
+
+def cctv(request):
+    return render(request, "map/cctv.html")
