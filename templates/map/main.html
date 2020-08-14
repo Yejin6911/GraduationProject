@@ -4,36 +4,79 @@
     <div id="map" style="width:100%;height:90%;margin:5px;"></div>
 </div>
 <script>
+    var map = new naver.maps.Map('map',{
+                center: new naver.maps.LatLng( 37.5617306, 126.94367550000001),
+                zoom: 15
+    });
+    var markers = [], infoWindows = [];
+
     {% for i in data %}
-        var map = new naver.maps.Map('map',{
-            center: new naver.maps.LatLng( 37.5617306, 126.94367550000001),
-            zoom: 15
-        });
         var position = new naver.maps.LatLng({{i.10}}, {{ i.11 }});
+
         var marker = new naver.maps.Marker({
                 map: map,
                 position : position
         });
 
-        var contentString = [
-            '<div class="iw_inner">',
-            '<h5>{{ i.2 }}</h5></br>',
-            '<a href="https://www.naver.com" target="_blank">www.naver.com</a>',
-            '</div>'
-        ].join('');
-
-        var infowindow = new naver.maps.InfoWindow({
-            content: contentString
-        })
-
-        naver.maps.addEventListener(marker,'click',function (e){
-            if(infowindow.getMap()){
-                infowindow.close();
-            } else {
-                infowindow.open(map,marker);
-            }
+        var infoWindow = new naver.maps.InfoWindow({
+            content:
+                '<a href="" style="width:auto;text-align:center;padding:10px;"><b>"{{ i.2 }}"</b></a>'
         });
+
+        markers.push(marker);
+        infoWindows.push(infoWindow);
     {% endfor %}
+
+    naver.maps.Event.addListener(map, 'idle', function() {
+        updateMarkers(map, markers);
+    });
+
+    function updateMarkers(map, markers){
+        var mapBounds = map.getBounds();
+        var marker, position;
+
+        for (var i = 0; i < markers.length; i++) {
+
+            marker = markers[i];
+            position = marker.getPosition();
+
+            if (mapBounds.hasLatLng(position)) {
+                showMarker(map, marker);
+            } else {
+                hideMarker(map, marker);
+            }
+        }
+    }
+
+    function showMarker(map, marker) {
+
+        if (marker.setMap(null)) return;
+        marker.setMap(map);
+    }
+
+    function hideMarker(map, marker) {
+
+        if (!marker.setMap(map)) return;
+        marker.setMap(null);
+    }
+
+    function getClickHandler(seq) {
+        return function(e) {
+            var marker = markers[seq],
+                infoWindow = infoWindows[seq];
+
+            if (infoWindow.getMap()) {
+                infoWindow.close();
+            } else {
+                infoWindow.open(map, marker);
+            }
+        }
+    }
+
+    for (var i=0, ii=markers.length; i<ii; i++) {
+        naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i));
+    }
+
 </script>
 {% endblock %}
 
