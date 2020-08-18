@@ -3,14 +3,20 @@ from django.contrib.auth.models import User
 
 import os
 
-path = str(os.getcwd()) + "\map\static\data.csv"
-f = open(path, "r", encoding='cp949')
-lines = f.readlines()
-l = []
-for line in lines:
-    l.append(line.split(','))
-f.close()
-data = l[1:]
+path = str(os.getcwd()) + "/map/static/data/"
+file_list = os.listdir(path)
+file_list_csv = [file for file in file_list if file.endswith(".csv")]
+
+data = []
+for file in file_list_csv:
+    full_path = path + str(file)
+    f = open(full_path, "r", encoding='cp949')
+    lines = f.readlines()
+    l = []
+    for line in lines:
+        l.append(line.split(','))
+    f.close()
+    data += l[1:]
 
 
 def main(request):
