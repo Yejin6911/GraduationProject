@@ -1,7 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 
 import os
+
+from django.urls import reverse
+
+from account.models import CustomUser
 
 path = str(os.getcwd()) + "/map/static/data/"
 file_list = os.listdir(path)
@@ -20,7 +24,10 @@ for file in file_list_csv:
 
 
 def main(request):
-    return render(request, "map/main.html", {'data': data})
+    if not request.user.is_authenticated:
+        return redirect(reverse("account:login"))
+    else:
+        return render(request, "map/main.html", {'data': data})
 
 
 def cctv(request):
