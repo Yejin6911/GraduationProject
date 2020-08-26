@@ -10,7 +10,7 @@ file_list_csv = [file for file in file_list if file.endswith(".csv")]
 data = []
 for file in file_list_csv:
     full_path = path + str(file)
-    f = open(full_path, "r", encoding='cp949')
+    f = open(full_path, "r", encoding='utf-8')
     lines = f.readlines()
     l = []
     for line in lines:
