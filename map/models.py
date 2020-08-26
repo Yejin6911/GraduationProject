@@ -14,3 +14,6 @@ class Location(models.Model):
     longitude = models.TextField()
     data_date=  models.DateField()
     alarm = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.pk)+"."+self.management
