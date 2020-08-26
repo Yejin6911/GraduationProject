@@ -1,8 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from django.views import generic
+from .forms import CustomUserCreationForm
 
+
+class SignUp(generic.CreateView):
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy('account:login')
+    template_name = 'account/login.html'
 
 def login(request):
     if request.method == "POST":
