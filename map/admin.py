@@ -3,6 +3,7 @@ from import_export.admin import ExportActionModelAdmin, ImportExportMixin, Impor
 
 from .models import Location
 
+
 class LocationAdmin(ImportExportMixin, admin.ModelAdmin):
     pass
 

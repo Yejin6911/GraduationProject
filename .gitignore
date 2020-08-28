@@ -147,3 +147,5 @@ dmypy.json
 desktop.ini
 Pipfile
 Pipfile.lock
+
+.DS_Store
