@@ -12,7 +12,7 @@
         var markers = [], infoWindows = [];
 
         {% for i in data %}
-            var position = new naver.maps.LatLng({{i.10}}, {{ i.11 }});
+            var position = new naver.maps.LatLng({{ i.latitude }}, {{ i.longitude }});
 
             var marker = new naver.maps.Marker({
                 map: map,

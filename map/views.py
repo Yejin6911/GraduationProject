@@ -6,6 +6,7 @@ import os
 from django.urls import reverse
 
 from account.models import CustomUser
+from map.models import Location
 
 path = str(os.getcwd()) + "/map/static/data/"
 file_list = os.listdir(path)
@@ -26,16 +27,8 @@ def main(request):
     if not request.user.is_authenticated:
         return redirect(reverse("account:login"))
     else:
-        data = []
-        location = CustomUser.objects.get(username=request.user.username).location
-        full_path = path + str(location)+'.csv'
-        f = open(full_path, "r", encoding='utf8')
-        lines = f.readlines()
-        l = []
-        for line in lines:
-            l.append(line.split(','))
-        f.close()
-        data += l[1:]
+        current_user = CustomUser.objects.get(username=request.user.username)
+        data = Location.objects.filter(station=current_user.location)
         return render(request, "map/main.html", {'data': data})
 
 
