@@ -29,7 +29,7 @@ def main(request):
         data = []
         location = CustomUser.objects.get(username=request.user.username).location
         full_path = path + str(location)+'.csv'
-        f = open(full_path, "r", encoding='utf-8')
+        f = open(full_path, "r", encoding='utf8')
         lines = f.readlines()
         l = []
         for line in lines:
