@@ -7,11 +7,12 @@ from django.urls import reverse
 
 from account.models import CustomUser
 from map.models import Location
+from alarm.models import Alarm
 
-path = str(os.getcwd()) + "/map/static/data/"
-file_list = os.listdir(path)
-file_list_csv = [file for file in file_list if file.endswith(".csv")]
-
+# path = str(os.getcwd()) + "/map/static/data/"
+# file_list = os.listdir(path)
+# file_list_csv = [file for file in file_list if file.endswith(".csv")]
+#
 # data = []
 # for file in file_list_csv:
 #     full_path = path + str(file)
@@ -28,10 +29,13 @@ def main(request):
         return redirect(reverse("account:login"))
     else:
         current_user = CustomUser.objects.get(username=request.user.username)
-        data = Location.objects.filter(station=current_user.location)
-        return render(request, "map/main.html", {'data': data})
+        # data = Location.objects.filter(station=current_user.location)
+        alarms = Alarm.objects.filter(checked=False).filter(station=current_user.location)
+        return render(request, "map/main.html", {'alarms':alarms})
 
 
-def cctv(request):
-    return render(request, "map/cctv.html")
+def cctv(request, location_pk):
+    location = Location.objects.get(pk=location_pk)
+    return render(request, "map/cctv.html", {'location': location})
+
 
