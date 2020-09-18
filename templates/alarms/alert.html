@@ -1,0 +1,26 @@
+<html>
+<head>
+    <title>ShareMe</title>
+</head>
+{% csrf_token %}
+<div><button id="btn">Posting</button></div>
+<script>
+    var btn=document.getElementById('btn');
+    var xhr=new XMLHttpRequest();
+    var username='{{username}}';
+
+    btn.addEventListener("click", function(){simple(this.innerHTML);});
+
+    function simple(event) {
+        xhr.open("POST", window.location.href, true);
+        xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+            'latitude': 37.527618,
+            'longitude': 126.876528
+
+
+        }));
+    };
+</script>
+</html>

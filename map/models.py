@@ -17,7 +17,7 @@ class Location(models.Model):
     latitude= models.TextField(null=True)
     longitude = models.TextField(null=True)
     data_date=  models.DateField(null=True)
-    alarm = models.BooleanField(default=False)
+    station = models.CharField(max_length=30)
 
     def __str__(self):
-        return str(self.pk)+"."+self.management
+        return str(self.pk)+"."+self.station
