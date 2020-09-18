@@ -14,10 +14,11 @@
     <link href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
 
     <!-- Style -->
-    <style type = "text/css">
-        #btn{
-            margin-top : 10px;
+    <style type="text/css">
+        #btn {
+            margin-top: 10px;
         }
+
         #contents-wrapper {
 
             width: 100%;
@@ -32,7 +33,7 @@
         #contents {
             border: 1px solid #487BE1;
             width: 80%;
-            height:100%;
+            height: 100%;
             float: left;
             padding: 10px;
 
@@ -40,8 +41,7 @@
 
 
         #button {
-            {#border: 1px solid #487BE1;#}
-            width: 20%;
+        {#border: 1px solid #487BE1;#} width: 20%;
             float: right;
             padding: 10px;
 
@@ -55,64 +55,52 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
-<body>
-
 <div class="d-flex" id="wrapper">
-
-{#    <!-- Sidebar -->#}
-{#    <div class="bg-light border-right" id="sidebar-wrapper">#}
-{#        <div class="sidebar-heading">위치 별 알림</div>#}
-{#        <div class="list-group list-group-flush">#}
-{#            <a href="#" class="list-group-item list-group-item-action bg-light">알림 기록 보기</a>#}
-{#            <a href="#" class="list-group-item list-group-item-action bg-light">인증 관리</a>#}
-{#            <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>#}
-{#            <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>#}
-{#            <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>#}
-{#            <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>#}
-{#        </div>#}
-{#    </div>#}
-{#    <!-- /#sidebar-wrapper -->#}
-
-    <!-- Page Content -->
     <div id="page-content-wrapper">
-        {% block content %}
-            <div id="contents-wrapper" >
-                <div id = "contents" style="border: 3px dashed #BDBDBD;">
-                    cctv
-                </div>
-                <!-- button -->
-                <div id="button" class="container">
-                    <div class="row">
-                        <div class="col-12" align="center">
-                            <h1>Button Group</h1>
-                            <div class="btn-group-vertical">
-                                <button type="button" id="btn" class="btn btn-primary">Primary</button>
-                                <button type="button" id="btn" class="btn btn-secondary">Secondary</button>
-                                <button submit="{dkfa;s" type="button" id="btn" class="btn btn-success">Success</button>
-                                <button type="button" id="btn" class="btn btn-danger">Danger</button>
-                            </div>
+        <div id="contents-wrapper">
+{#            <div id="contents">#}
+{#                <img src="http://192.168.137.193:8090/?action=stream" alt="This is a static snapshot">#}
+{#            </div>#}
+            <!-- button -->
+            <div id="button" class="container">
+                <div class="row">
+                    <div class="col-12" align="center">
+                        <h1>Button Group</h1>
+                        <div class="btn-group-vertical">
+                            <button type="button" id="btn" class="btn btn-danger">사이렌 울리기</button>
+                            <button type="button" id="check" class="btn btn-secondary">확인완료</button>
+                            <button type="button" id="btn" class="btn btn-success">창 닫기</button>
+                            <button type="button" id="btn" class="btn btn-primary">사이렌 울리기</button>
                         </div>
                     </div>
                 </div>
-                <!-- /#button -->
-
             </div>
-        {% endblock %}
-
+            <!-- /#button -->
+        </div>
     </div>
-    <!-- /#page-content-wrapper -->
+<!-- /#page-content-wrapper -->
 </div>
 <!-- /#wrapper -->
 <!-- Bootstrap core JavaScript -->
 <script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
 <script src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<!-- Menu Toggle Script -->
-<script>
-    $("#menu-toggle").click(function (e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<script type="text/javascript">
+  $("#check").click(function(){
+      $.ajax({
+          type: "POST",
+          url: "{% url "map:check" alarm.location_pk %}",
+          data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+          success: function(response){
+              window.close();
+          },
+          error: function(request, status, error){
+              alert(error)
+          },
+      });
+  })
 </script>
