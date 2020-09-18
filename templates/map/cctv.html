@@ -56,11 +56,12 @@
 </head>
 
 <div class="d-flex" id="wrapper">
+    <!-- Page Content -->
     <div id="page-content-wrapper">
         <div id="contents-wrapper">
-{#            <div id="contents">#}
-{#                <img src="http://192.168.137.193:8090/?action=stream" alt="This is a static snapshot">#}
-{#            </div>#}
+            <div id="contents" style="border: 3px dashed #BDBDBD;">
+                cctv
+            </div>
             <!-- button -->
             <div id="button" class="container">
                 <div class="row">
@@ -68,9 +69,14 @@
                         <h1>Button Group</h1>
                         <div class="btn-group-vertical">
                             <button type="button" id="btn" class="btn btn-danger">사이렌 울리기</button>
-                            <button type="button" id="check" class="btn btn-secondary">확인완료</button>
+                            <form id="check" action="{% url 'map:check' alarm.location_pk %}" method="POST">
+                                {% csrf_token %}
+                                <button name= "button" id="btn" class="btn btn-secondary">
+                                    확인 완료
+                                </button>
+                            </form>
                             <button type="button" id="btn" class="btn btn-success">창 닫기</button>
-                            <button type="button" id="btn" class="btn btn-primary">사이렌 울리기</button>
+                            {#                                <button type="button" id="btn" class="btn btn-primary">사이렌 울리기</button>#}
                         </div>
                     </div>
                 </div>
@@ -87,20 +93,25 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
 
-<script type="text/javascript">
-  $("#check").click(function(){
-      $.ajax({
-          type: "POST",
-          url: "{% url "map:check" alarm.location_pk %}",
-          data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
-          success: function(response){
-              window.close();
-          },
-          error: function(request, status, error){
-              alert(error)
-          },
-      });
-  })
+    $(document).ready(function () {
+
+        $('button').submit(function (event) {
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'map:check' alarm.location_pk %}",
+            }).success(function (data) {
+                window.close();
+            });
+
+            event.preventDefault();
+        });
+    });
+
 </script>
