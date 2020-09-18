@@ -36,6 +36,13 @@ def main(request):
 
 def cctv(request, location_pk):
     location = Location.objects.get(pk=location_pk)
-    return render(request, "map/cctv.html", {'location': location})
+    alarm = Alarm.objects.get(location_pk=location_pk)
+    return render(request, "map/cctv.html", {'location': location, 'alarm': alarm})
 
+def check(request, location_pk):
+    alarm = Alarm.objects.get(location_pk=location_pk)
+    print(alarm)
+    alarm.checked = True
+    alarm.save()
+    return redirect("map:main")
 
