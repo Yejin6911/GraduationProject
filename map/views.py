@@ -33,14 +33,14 @@ def main(request):
         alarms = Alarm.objects.filter(checked=False).filter(station=current_user.location)
         return render(request, "map/main.html", {'alarms':alarms})
 
-
 def cctv(request, location_pk):
-    location = Location.objects.get(pk=location_pk)
-    alarm = Alarm.objects.get(location_pk=location_pk)
-    return render(request, "map/cctv.html", {'location': location, 'alarm': alarm})
+    # location = Location.objects.get(pk=location_pk)
+    alarm = Alarm.objects.filter(location_pk=location_pk).get(checked=False)
+    return render(request, "map/cctv.html", {'alarm': alarm})
 
-def check(request, location_pk):
-    alarm = Alarm.objects.get(location_pk=location_pk)
+
+def check(request, pk):
+    alarm = Alarm.objects.get(pk=pk)
     print(alarm)
     alarm.checked = True
     alarm.save()
