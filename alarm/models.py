@@ -8,3 +8,4 @@ class Alarm(models.Model):
     address = models.TextField(null=True)
     station = models.CharField(max_length=30)
     checked = models.BooleanField(default=False)
+    date = models.DateTimeField(auto_now_add=True)

@@ -19,7 +19,7 @@ class Alert(TemplateView):
         ins=models.Alarm()
         data_unicode=request.body.decode('utf-8')
         data=json.loads(data_unicode)
-        alarms = Alarm.objects.filter(longitude=data['longitude'],latitude=data['latitude'])
+        alarms = Alarm.objects.filter(longitude=data['longitude'],latitude=data['latitude']).filter(checked=False)
         if not alarms:
             location = Location.objects.get(longitude=data['longitude'], latitude=data['latitude'])
             if location.S_address != '' or location.S_address!=None:

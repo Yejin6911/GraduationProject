@@ -1,9 +1,11 @@
 <html>
 <head>
-    <title>ShareMe</title>
+    <title>Alert</title>
 </head>
-{% csrf_token %}
-<div><button id="btn">Posting</button></div>
+<div>
+    {% csrf_token %}
+    <button id="btn">알람생성</button>
+</div>
 <script>
     var btn=document.getElementById('btn');
     var xhr=new XMLHttpRequest();
@@ -16,8 +18,8 @@
         xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({
-            'latitude': 37.527618,
-            'longitude': 126.876528
+            'latitude': 37.511897,
+            'longitude': 126.867698
 
 
         }));
