@@ -53,5 +53,9 @@ def check(request, location_pk):
     alarm.save()
     return redirect("map:main")
 
+def record(request):
+    alarms = Alarm.objects.all()
+    return render(request, "map/record.html", {'alarms':alarms})
+
 
 
