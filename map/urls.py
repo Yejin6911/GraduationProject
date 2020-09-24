@@ -9,4 +9,5 @@ urlpatterns = [
     path('cctv/<int:location_pk>', views.cctv, name='cctv'),
     path('cctv/check/<int:pk>', views.check, name='check'),
     path('record/',views.record, name='record'),
+    path('SendSms/', views.SmsSendView.as_view(), name='sendsms')
 ]
