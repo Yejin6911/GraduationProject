@@ -17,7 +17,7 @@ class Location(models.Model):
     latitude= models.TextField(null=True)
     longitude = models.TextField(null=True)
     data_date=  models.DateField(null=True)
-    station = models.CharField(max_length=30)
+    station = models.ForeignKey('account.Station', on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.pk)+"."+self.station
+        return self.station.name +"-"+str(self.pk)

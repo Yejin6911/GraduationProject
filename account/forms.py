@@ -5,7 +5,7 @@ from .models import CustomUser
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ('username', 'location', 'password1', 'password2')
+        fields = ('username', 'station', 'password1', 'password2')
         help_texts = {
             'username': None,
         }

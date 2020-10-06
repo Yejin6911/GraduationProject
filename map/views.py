@@ -30,7 +30,7 @@ def main(request):
     else:
         current_user = CustomUser.objects.get(username=request.user.username)
         # data = Location.objects.filter(station=current_user.location)
-        alarms = Alarm.objects.filter(checked=False).filter(station=current_user.location)
+        alarms = Alarm.objects.filter(checked=False).filter(station=current_user.station)
         return render(request, "map/main.html", {'alarms':alarms})
 
 def cctv(request, location_pk):
@@ -41,7 +41,6 @@ def cctv(request, location_pk):
 
 def check(request, pk):
     alarm = Alarm.objects.get(pk=pk)
-    print(alarm)
     alarm.checked = True
     alarm.save()
     return redirect("map:main")

@@ -6,5 +6,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('map.urls')),
     path('account/', include('account.urls')),
-    path('Alert/', views.Alert.as_view()),
+    path('Alert/', include('alarm.urls')),
+
 ]

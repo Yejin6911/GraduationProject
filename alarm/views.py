@@ -2,6 +2,7 @@ from django.views.generic import TemplateView
 from . import models
 import json
 from django.shortcuts import HttpResponse
+from playsound import playsound
 
 from .models import Alarm
 from map.models import Location
@@ -29,6 +30,11 @@ class Alert(TemplateView):
             ins.longitude=data['longitude']
             ins.latitude=data['latitude']
             ins.location_pk=location.pk
-            ins.station=location.station
+            ins.station=location.station.name
             ins.save()
         return HttpResponse('')
+
+
+def siren(request):
+    playsound("/Users/yejin/dev/GraduationProject/alarm/siren.mp3")
+    return HttpResponse('')
