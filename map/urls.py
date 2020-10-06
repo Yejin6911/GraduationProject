@@ -8,6 +8,6 @@ urlpatterns = [
     path('', views.main, name='main'),
     path('cctv/<int:location_pk>', views.cctv, name='cctv'),
     path('cctv/check/<int:pk>', views.check, name='check'),
-    path('record/',views.record, name='record'),
-    path('SendSms/', views.SmsSendView.as_view(), name='sendsms')
+    path('record/', views.record, name='record'),
+    path('send/<int:alarm_pk>', views.send, name='send')
 ]

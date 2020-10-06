@@ -10,7 +10,7 @@ class Location(models.Model):
     purpose = models.TextField(null=True)
     camera_num = models.IntegerField(null=True)
     camera_pixel = models.IntegerField(null=True)
-    shoot_info= models.TextField(null=True)
+    shoot_info = models.TextField(null=True)
     storage_days = models.IntegerField(null=True)
     installed_date = models.TextField(null=True)
     phone = models.TextField(null=True)

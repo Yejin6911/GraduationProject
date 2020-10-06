@@ -114,12 +114,11 @@
 
     $("#send").click(function () {
         $.ajax({
-            type: "POST",
-            url: "{% url 'map:sendsms' %}",
+            type: "GET",
+            url: "{% url 'map:send' alarm.pk %}",
             data: {'csrfmiddlewaretoken': '{{ csrf_token }}',},
             success: function (response) {
-                opener.parent.location.reload();
-                window.close();
+                alert('성')
             },
             error: function (request, status, error) {
                 alert(error)

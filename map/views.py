@@ -1,6 +1,15 @@
 import json
 from sqlite3.dbapi2 import Timestamp
 
+import base64
+import hashlib
+import hmac
+import time
+import requests
+import json
+import keys
+from filters import *
+
 import requests.api
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -64,46 +73,55 @@ def record(request):
     alarms = Alarm.objects.all()
     return render(request, "map/record.html", {'alarms':alarms})
 
-class SmsSendView(TemplateView):
-    # 실제 문자를 보내주는 메서드
+def make_signature(string):
+    secret_key = bytes("DHK4IChkpNFoY2YNllWdPg2LQzBnHDLn4ts9USZu", 'UTF-8')
+    string = bytes(string, 'UTF-8')
+    string_hmac = hmac.new(secret_key, string, digestmod=hashlib.sha256).digest()
+    string_base64 = base64.b64encode(string_hmac).decode('UTF-8')
+    return string_base64
 
-    def send_sms(self, phone_number):
-        headers = {
-            'Content-Type': 'application/json; charset=utf-8',
-            'x-ncp-apigw-timestamp': f'{Timestamp}',
-            'x-ncp-iam-access-key': f'ncp:sms:kr:260601292957:graduation_project',
-            'x-ncp-apigw-signature-v2': f'79a5bec369f24ec699df4607e28be6e6',
+
+def send(request, alarm_pk):
+    url = "https://sens.apigw.ntruss.com"
+    uri = "/sms/v2/services/" + "ncp:sms:kr:260601292957:graduation_project" + "/messages"
+    api_url = url + uri
+    timestamp = str(int(time.time() * 1000))
+    access_key = "fnKXlNi1N4YGosnv7usX"
+    string_to_sign = "POST " + uri + "\n" + timestamp + "\n" + access_key
+    signature = make_signature(string_to_sign)
+
+    alarm = Alarm.objects.get(pk=alarm_pk)
+    # 해당 위치의 station을 불러와서, 그 관할서의 guard들을 불러옴.
+    address = alarm.address
+    station = alarm.station
+    guards = guard.objects.filter(station=station)
+
+    message = "{} 관할 구역에서 위급 상황이 발생했습니다. {} 근처에 계신 분들은 신속히 대응해주시기 바랍니다.".format(station, address)
+
+    headers = {
+        'Content-Type': "application/json; charset=UTF-8",
+        'x-ncp-apigw-timestamp': timestamp,
+        'x-ncp-iam-access-key': access_key,
+        'x-ncp-apigw-signature-v2': signature
+    }
+
+
+    for guard in guards:
+        phone = guard['phone']
+        body = {
+            "type": "SMS",
+            "contentType": "COMM",
+            "from": "01048046921",
+            "content": message,
+            "messages": [{"to": phone}]
         }
 
-        data = {
-            'type': 'SMS',
-            'contentType': 'COMM',
-            'countryCode': '82',
-            'from': f'01062169443',
-            'to': [
-                f'{phone_number}',
-            ],
-            'content': f'서대문구 이화여대길 순찰 바람'
-        }
-        print(data)
+        response = requests.post(api_url, headers=headers, data=body)
+        response.raise_for_status()
 
-        requests.post('https://sens.apigw.ntruss.com/sms/v2', headers=headers, json=data)
-
-    def post(self, request):
-        try:
-            # input_data = json.loads(request.body)
-            # input_phone_number = input_data['phone_number']
-            input_phone_number = '01048046921'
-            exist_phone_number = SendSms.objects.get(phone_number=input_phone_number).phone_number
-            # exist_phone_number.save()
-
-            self.send_sms(phone_number=exist_phone_number)
-            return JsonResponse({'message': 'SUCCESS'}, status=200)
-
-        except SendSms.DoesNotExist:
-            SendSms.objects.create(
-                phone_number=input_phone_number,
-            ).save()
-
-            self.send_sms(phone_number=input_phone_number)
-            return JsonResponse({'message': 'SUCCESS'}, status=200)
+def make_signature(string):
+    secret_key = bytes(keys.secret_key, 'UTF-8')
+    string = bytes(string, 'UTF-8')
+    string_hmac = hmac.new(secret_key, string, digestmod=hashlib.sha256).digest()
+    string_base64 = base64.b64encode(string_hmac).decode('UTF-8')
+    return string_base64
