@@ -82,10 +82,10 @@ def make_signature(string):
 
 def send(request, alarm_pk):
     url = "https://sens.apigw.ntruss.com"
-    uri = "/sms/v2/services/" + "ncp:sms:kr:260601292957:graduation_project" + "/messages"
+    uri = "/sms/v2/services/" + keys.service_id + "/messages"
     api_url = url + uri
     timestamp = str(int(time.time() * 1000))
-    access_key = "fnKXlNi1N4YGosnv7usX"
+    access_key = keys.access_key
     string_to_sign = "POST " + uri + "\n" + timestamp + "\n" + access_key
     signature = make_signature(string_to_sign)
 
