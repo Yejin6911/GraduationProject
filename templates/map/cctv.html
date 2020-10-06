@@ -110,7 +110,7 @@
 
   $("#siren").click(function(){
       $.ajax({
-          type: "GET",
+          type: "POST",
           url: "{% url 'alarm:siren' %}",
           success: function(response){
               alert('사이렌을 울렸습니다.');
