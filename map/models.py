@@ -10,7 +10,7 @@ class Location(models.Model):
     purpose = models.TextField(null=True)
     camera_num = models.IntegerField(null=True)
     camera_pixel = models.IntegerField(null=True)
-    shoot_info= models.TextField(null=True)
+    shoot_info = models.TextField(null=True)
     storage_days = models.IntegerField(null=True)
     installed_date = models.TextField(null=True)
     phone = models.TextField(null=True)
@@ -21,3 +21,10 @@ class Location(models.Model):
 
     def __str__(self):
         return self.station.name +"-"+str(self.pk)
+
+
+class SendSms(models.Model):
+    phone_number = models.CharField(max_length=11, primary_key=True)
+
+    class Meta:
+        db_table = 'phone_numbers'
