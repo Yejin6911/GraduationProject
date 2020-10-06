@@ -69,7 +69,7 @@
                     <div class="col-12" align="center">
                         <h1>Button Group</h1>
                         <div class="btn-group-vertical">
-                            <button type="button" id="btn" class="btn btn-danger">사이렌 울리기</button>
+                            <button type="button" id="siren" class="btn btn-danger">사이렌 울리기</button>
                             <button type="button" id="check" formmethod="POST" class="btn btn-secondary">확인완료</button>
                             <button type="button" id="send" formmethod="POST" class="btn btn-secondary">메시지 보내기</button>
                             <button type="button" id="btn" class="btn btn-success">창 닫기</button>
@@ -97,21 +97,34 @@
         $("#wrapper").toggleClass("toggled");
     });
 
-    $("#check").click(function () {
-        $.ajax({
-            type: "POST",
-            url: "{% url 'map:check' alarm.pk %}",
-            data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
-            success: function (response) {
-                opener.parent.location.reload();
-                window.close();
-            },
-            error: function (request, status, error) {
-                alert(error)
-            },
-        });
-    });
+<script type="text/javascript">
+  $("#check").click(function(){
+      $.ajax({
+          type: "GET",
+          url: "{% url 'map:check' alarm.pk %}",
+          data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+          success: function(response){
+              opener.parent.location.reload();
+              window.close();
+          },
+          error: function(request, status, error){
+              alert(error)
+          },
+      });
+  })
 
+  $("#siren").click(function(){
+      $.ajax({
+          type: "GET",
+          url: "{% url 'alarm:siren' %}",
+          success: function(response){
+              alert('사이렌을 울렸습니다.');
+          },
+          error: function(request, status, error){
+              alert(error)
+          },
+      });
+  })
     $("#send").click(function () {
         $.ajax({
             type: "GET",

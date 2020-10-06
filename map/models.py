@@ -17,14 +17,7 @@ class Location(models.Model):
     latitude= models.TextField(null=True)
     longitude = models.TextField(null=True)
     data_date=  models.DateField(null=True)
-    station = models.CharField(max_length=30)
+    station = models.ForeignKey('account.Station', on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.pk)+"."+self.station
-
-
-class SendSms(models.Model):
-    phone_number = models.CharField(max_length=11, primary_key=True)
-
-    class Meta:
-        db_table = 'phone_numbers'
+        return self.station.name +"-"+str(self.pk)
