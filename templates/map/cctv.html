@@ -100,7 +100,7 @@
 <script type="text/javascript">
   $("#check").click(function(){
       $.ajax({
-          type: "POST",
+          type: "GET",
           url: "{% url 'map:check' alarm.pk %}",
           data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
           success: function(response){

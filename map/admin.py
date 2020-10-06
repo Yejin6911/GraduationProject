@@ -4,7 +4,7 @@ from import_export.admin import ExportActionModelAdmin, ImportExportMixin, Impor
     ImportExportModelAdmin
 from import_export.forms import ImportForm, ConfirmImportForm
 
-from .models import Location, SendSms
+from .models import Location
 from account.models import Station
 from django import forms
 
@@ -24,4 +24,3 @@ class LocationAdmin(ImportExportMixin, admin.ModelAdmin):
     resources_class = LocationResource
 
 admin.site.register(Location, LocationAdmin)
-admin.site.register(SendSms)

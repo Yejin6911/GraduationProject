@@ -21,10 +21,3 @@ class Location(models.Model):
 
     def __str__(self):
         return self.station.name +"-"+str(self.pk)
-
-
-class SendSms(models.Model):
-    phone_number = models.CharField(max_length=11, primary_key=True)
-
-    class Meta:
-        db_table = 'phone_numbers'

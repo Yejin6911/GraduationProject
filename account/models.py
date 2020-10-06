@@ -11,3 +11,9 @@ class Station(models.Model):
 class CustomUser(AbstractUser):
 
     station = models.ForeignKey('account.Station', on_delete=models.CASCADE, null=True)
+
+class Guard(models.Model):
+    name = models.CharField(max_length=30)
+    phone = models.CharField(max_length=30)
+    station = models.ForeignKey('account.Station', on_delete=models.CASCADE)
+    state = models.BooleanField(default=False)

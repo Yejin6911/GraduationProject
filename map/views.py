@@ -7,8 +7,7 @@ import hmac
 import time
 import requests
 import json
-import keys
-from filters import *
+from . import keys
 
 import requests.api
 from django.http import JsonResponse
@@ -21,8 +20,7 @@ from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView
 
-from account.models import CustomUser
-from map.models import Location, SendSms
+from account.models import CustomUser, Guard
 from alarm.models import Alarm
 
 # path = str(os.getcwd()) + "/map/static/data/"
@@ -61,12 +59,6 @@ def check(request, pk):
     alarm.save()
     return redirect("map:main")
 
-def check(request, location_pk):
-    alarm = Alarm.objects.get(location_pk=location_pk)
-    print(alarm)
-    alarm.checked = True
-    alarm.save()
-    return redirect("map:main")
 
 def record(request):
     alarms = Alarm.objects.all()
@@ -93,7 +85,7 @@ def send(request, alarm_pk):
     # 해당 위치의 station을 불러와서, 그 관할서의 guard들을 불러옴.
     address = alarm.address
     station = alarm.station
-    guards = guard.objects.filter(station=station)
+    guards = Guard.objects.filter(station=station)
 
     message = "{} 관할 구역에서 위급 상황이 발생했습니다. {} 근처에 계신 분들은 신속히 대응해주시기 바랍니다.".format(station, address)
 
