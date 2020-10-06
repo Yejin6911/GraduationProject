@@ -9,7 +9,6 @@ import requests
 import json
 from . import keys
 
-import requests.api
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
@@ -20,7 +19,7 @@ from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView
 
-from account.models import CustomUser, Guard
+from account.models import CustomUser, Guard, Station
 from alarm.models import Alarm
 
 # path = str(os.getcwd()) + "/map/static/data/"
@@ -37,6 +36,8 @@ from alarm.models import Alarm
 #         l.append(line.split(','))
 #     f.close()
 #     data += l[1:]
+from .models import Location
+
 
 def main(request):
     if not request.user.is_authenticated:
@@ -44,7 +45,7 @@ def main(request):
     else:
         current_user = CustomUser.objects.get(username=request.user.username)
         # data = Location.objects.filter(station=current_user.location)
-        alarms = Alarm.objects.filter(checked=False).filter(station=current_user.station)
+        alarms = Alarm.objects.filter(checked=False).filter(station=current_user.station.name)
         return render(request, "map/main.html", {'alarms':alarms})
 
 def cctv(request, location_pk):
@@ -82,12 +83,13 @@ def send(request, alarm_pk):
     signature = make_signature(string_to_sign)
 
     alarm = Alarm.objects.get(pk=alarm_pk)
+    location = Location.objects.get(pk=alarm.location_pk)
     # 해당 위치의 station을 불러와서, 그 관할서의 guard들을 불러옴.
     address = alarm.address
-    station = alarm.station
-    guards = Guard.objects.filter(station=station)
+    station = Station.objects.get(name=alarm.station)
+    guards = Guard.objects.filter(station=station.pk)
 
-    message = "{} 관할 구역에서 위급 상황이 발생했습니다. {} 근처에 계신 분들은 신속히 대응해주시기 바랍니다.".format(station, address)
+    message = "{} 확인요망".format(address)
 
     headers = {
         'Content-Type': "application/json; charset=UTF-8",
@@ -98,7 +100,7 @@ def send(request, alarm_pk):
 
 
     for guard in guards:
-        phone = guard['phone']
+        phone = guard.phone
         body = {
             "type": "SMS",
             "contentType": "COMM",
@@ -106,13 +108,14 @@ def send(request, alarm_pk):
             "content": message,
             "messages": [{"to": phone}]
         }
-
-        response = requests.post(api_url, headers=headers, data=body)
+        body2 = json.dumps(body)
+        response = requests.post(api_url, headers=headers, data=body2)
         response.raise_for_status()
+    return redirect("map:cctv", location.pk)
 
 def make_signature(string):
     secret_key = bytes(keys.secret_key, 'UTF-8')
     string = bytes(string, 'UTF-8')
     string_hmac = hmac.new(secret_key, string, digestmod=hashlib.sha256).digest()
-    string_base64 = base64.b64encode(string_hmac).decode('UTF-8')
+    string_base64 = base64.b64encode(string_hmac)
     return string_base64

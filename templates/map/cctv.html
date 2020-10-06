@@ -70,8 +70,8 @@
                         <h1>Button Group</h1>
                         <div class="btn-group-vertical">
                             <button type="button" id="siren" class="btn btn-danger">사이렌 울리기</button>
-                            <button type="button" id="check" formmethod="POST" class="btn btn-secondary">확인완료</button>
-                            <button type="button" id="send" formmethod="POST" class="btn btn-secondary">메시지 보내기</button>
+                            <button type="button" id="check" class="btn btn-secondary">확인완료</button>
+                            <button type="button" id="send" class="btn btn-secondary">메시지 보내기</button>
                             <button type="button" id="btn" class="btn btn-success">창 닫기</button>
                             {#                                <button type="button" id="btn" class="btn btn-primary">사이렌 울리기</button>#}
                         </div>
@@ -91,19 +91,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <!-- Menu Toggle Script -->
-<script type = "text/javascript" >
-    $("#menu-toggle").click(function (e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-
 <script type="text/javascript">
   $("#check").click(function(){
       $.ajax({
-          type: "GET",
+          type: "POST",
           url: "{% url 'map:check' alarm.pk %}",
           data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
           success: function(response){
+              alert('확인완료')
               opener.parent.location.reload();
               window.close();
           },
@@ -127,11 +122,12 @@
   })
     $("#send").click(function () {
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: "{% url 'map:send' alarm.pk %}",
             data: {'csrfmiddlewaretoken': '{{ csrf_token }}',},
+            async:true,
             success: function (response) {
-                alert('성')
+                alert('성공')
             },
             error: function (request, status, error) {
                 alert(error)
