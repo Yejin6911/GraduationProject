@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title> cctv 창</title>
+    <title> {{ alarm.address }}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
@@ -58,7 +58,8 @@
 <div class="d-flex" id="wrapper">
     <!-- Page Content -->
     <div id="page-content-wrapper">
-        <div id="contents-wrapper">
+        <h3 style="padding:10px 10px 0 10px;">실시간 CCTV 영상 - 주소: {{ alarm.address }}</h3>
+        <div id="contents-wrapper" style="height:90%;">
             <div id="contents">
                 <img src="http://192.168.137.193:8090/?action=stream" alt="This is a static snapshot"
                      style=width:100%;height:100%;>
@@ -67,12 +68,13 @@
             <div id="button" class="container">
                 <div class="row">
                     <div class="col-12" align="center">
-                        <h1>Button Group</h1>
-                        <div class="btn-group-vertical">
+                        <h3>알람 발생 시간</h3>
+                        <h4>{{ alarm.date }}</h4><br>
+                        <div class="btn-group-vertical" style="width:100%;">
                             <button type="button" id="siren" class="btn btn-danger">사이렌 울리기</button>
-                            <button type="button" id="check" class="btn btn-secondary">확인완료</button>
-                            <button type="button" id="send" class="btn btn-secondary">메시지 보내기</button>
-                            <button type="button" id="btn" class="btn btn-success">창 닫기</button>
+                            <button type="button" id="send" class="btn btn-primary">메시지 보내기</button>
+                            <button type="button" id="check" class="btn btn-success">확인완료</button>
+{#                            <button type="button" id="btn" class="btn btn-success" style="margin:0;">창 닫기</button>#}
                             {#                                <button type="button" id="btn" class="btn btn-primary">사이렌 울리기</button>#}
                         </div>
                     </div>

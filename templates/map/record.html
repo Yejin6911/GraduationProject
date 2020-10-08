@@ -236,7 +236,7 @@
                     <tr>
                       <th>일시</th>
                       <th>주소</th>
-                      <th>비고</th>
+                      <th>확인여부</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -244,7 +244,13 @@
                     <tr>
                       <td>{{ i.date }}</td>
                       <td>{{ i.address }}</td>
-                      <td>{{ i.checked }}</td>
+                      <td>
+                          {% if i.checked %}
+                                O
+                          {% else %}
+                                X
+                          {% endif %}
+                       </td>
                     </tr>
                   {% endfor %}
                   </tbody>
@@ -252,7 +258,6 @@
               </div>
             </div>
           </div>
-
         </div>
         <!-- /.container-fluid -->
 
