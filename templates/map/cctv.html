@@ -1,0 +1,140 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title> {{ alarm.address }}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+
+    <!-- Style -->
+    <style type="text/css">
+        #btn {
+            margin-top: 10px;
+        }
+
+        #contents-wrapper {
+
+            width: 100%;
+            height: 100%;
+            padding: 10px;
+            position: absolute;
+            overflow: hidden;
+
+        }
+
+
+        #contents {
+            border: 1px solid #487BE1;
+            width: 80%;
+            height: 100%;
+            float: left;
+            padding: 10px;
+
+        }
+
+
+        #button {
+        {#border: 1px solid #487BE1;#} width: 20%;
+            float: right;
+            padding: 10px;
+
+        }
+    </style>
+    <!--# Style -->
+    <!-- Custom styles for this template -->
+    <link href="{% static "css/simple-sidebar.css" %}" rel="stylesheet">
+    <script type="text/javascript"
+            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=cu5hnzqfla"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<div class="d-flex" id="wrapper">
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <h3 style="padding:10px 10px 0 10px;">실시간 CCTV 영상 - 주소: {{ alarm.address }}</h3>
+        <div id="contents-wrapper" style="height:90%;">
+            <div id="contents">
+                <img src="http://192.168.137.193:8090/?action=stream" alt="This is a static snapshot"
+                     style=width:100%;height:100%;>
+            </div>
+            <!-- button -->
+            <div id="button" class="container">
+                <div class="row">
+                    <div class="col-12" align="center">
+                        <h3>알람 발생 시간</h3>
+                        <h4>{{ alarm.date }}</h4><br>
+                        <div class="btn-group-vertical" style="width:100%;">
+                            <button type="button" id="siren" class="btn btn-danger">사이렌 울리기</button>
+                            <button type="button" id="send" class="btn btn-primary">메시지 보내기</button>
+                            <button type="button" id="check" class="btn btn-success">확인완료</button>
+{#                            <button type="button" id="btn" class="btn btn-success" style="margin:0;">창 닫기</button>#}
+                            {#                                <button type="button" id="btn" class="btn btn-primary">사이렌 울리기</button>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /#button -->
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+</div>
+<!-- /#wrapper -->
+<!-- Bootstrap core JavaScript -->
+<script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
+<script src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!-- Menu Toggle Script -->
+<script type="text/javascript">
+  $("#check").click(function(){
+      $.ajax({
+          type: "POST",
+          url: "{% url 'map:check' alarm.pk %}",
+          data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+          success: function(response){
+              alert('확인완료')
+              opener.parent.location.reload();
+              window.close();
+          },
+          error: function(request, status, error){
+              alert(error)
+          },
+      });
+  })
+
+  $("#siren").click(function(){
+      $.ajax({
+          type: "GET",
+          url: "{% url 'alarm:siren' %}",
+          success: function(response){
+              alert('사이렌을 울렸습니다.');
+          },
+          error: function(request, status, error){
+              alert(error)
+          },
+      });
+  })
+    $("#send").click(function () {
+        $.ajax({
+            type: "POST",
+            url: "{% url 'map:send' alarm.pk %}",
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}',},
+            async:true,
+            success: function (response) {
+                alert('성공')
+            },
+            error: function (request, status, error) {
+                alert(error)
+            },
+        });
+    });
+
+</script>

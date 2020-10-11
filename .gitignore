@@ -142,6 +142,13 @@ dmypy.json
 
 .idea
 
+.DS_Store
+
 desktop.ini
 Pipfile
 Pipfile.lock
+
+.DS_Store
+dump.rdb
+
+keys.py
