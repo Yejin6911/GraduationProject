@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'alarm',
     'account',
     'import_export',
+    'django_otp'
 ]
 
 AUTH_USER_MODEL = 'account.CustomUser'

@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>알림 기록</title>
+    <title>지킴이 조</title>
 
     <!-- Custom fonts for this template -->
     <link href="{% static "vendor/fontawesome-free/css/all.min.css" %}" rel="stylesheet" type="text/css">
@@ -174,7 +174,7 @@
                     {#                            </div>#}
                     {#                        </li>#}
                     {##}
-                    {#                        <div class="topbar-divider d-none d-sm-block"></div>#}
+                   {#                        <div class="topbar-divider d-none d-sm-block"></div>#}
                     {##}
                     {#                        <!-- Nav Item - User Information -->#}
                     {#                        <li class="nav-item dropdown no-arrow">#}
@@ -215,31 +215,29 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">알람 기록 조회</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">담당 경찰 조회</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
-                                        <th>발생 일시</th>
-                                        <th>발생 장소</th>
-                                        <th>확인 여부</th>
+                                        <th>이름</th>
+                                        <th>담당 시간</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for alarm in alarms %}
+                                    {% for guard in guards %}
                                         <tr>
-                                            <td>{{ alarm.date }}</td>
-                                            <td>{{ alarm.address }}</td>
+                                            <td>{{ guard.name }}</td>
                                             <td>
-                                                {% if alarm.checked %}
-                                                    O
+                                                {% if guard.state %}
+                                                    활동중
                                                 {% else %}
                                                     X
                                                 {% endif %}
                                             </td>
-
+                                            <td>{{ guard.phone }}</td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
