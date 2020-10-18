@@ -3,10 +3,13 @@ from . import models
 import json
 from django.shortcuts import HttpResponse
 from playsound import playsound
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 from .models import Alarm
 from map.models import Location
 
+@method_decorator(csrf_exempt, name='dispatch')
 class Alert(TemplateView):
     template_name = "alarms/alert.html"
 
