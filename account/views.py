@@ -11,6 +11,7 @@ class SignUp(generic.CreateView):
     success_url = reverse_lazy('account:login')
     template_name = 'account/login.html'
 
+
 def login(request):
     if request.method == "POST":
         username = request.POST['username']

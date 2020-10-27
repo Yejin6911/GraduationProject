@@ -37,6 +37,7 @@ from alarm.models import Alarm
 #     f.close()
 #     data += l[1:]
 from .models import Location
+from django_otp.decorators import otp_required
 
 
 def main(request):
