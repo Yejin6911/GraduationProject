@@ -62,8 +62,19 @@ def check(request, pk):
 
 
 def record(request):
-    alarms = Alarm.objects.all()
-    return render(request, "map/record.html", {'alarms':alarms})
+    current_user = CustomUser.objects.get(username=request.user.username)
+    alarms = Alarm.objects.filter(station=current_user.station.name)
+    return render(request, "map/record.html", {'alarms':alarms, 'station': current_user.station.name})
+
+def police_list(request):
+    current_user = CustomUser.objects.get(username=request.user.username)
+    polices = CustomUser.objects.filter(station=current_user.station)
+    return render(request, "map/police_list.html", {'polices':polices,'station':current_user.station.name})
+
+def guard_list(request):
+    current_user = CustomUser.objects.get(username=request.user.username)
+    guards = Guard.objects.filter(station=current_user.station)
+    return render(request, "map/guard_list.html", {'guards':guards, 'station':current_user.station.name})
 
 def make_signature(string):
     secret_key = bytes("DHK4IChkpNFoY2YNllWdPg2LQzBnHDLn4ts9USZu", 'UTF-8')
@@ -71,7 +82,6 @@ def make_signature(string):
     string_hmac = hmac.new(secret_key, string, digestmod=hashlib.sha256).digest()
     string_base64 = base64.b64encode(string_hmac).decode('UTF-8')
     return string_base64
-
 
 def send(request, alarm_pk):
     url = "https://sens.apigw.ntruss.com"

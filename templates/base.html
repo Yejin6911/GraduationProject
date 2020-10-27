@@ -26,7 +26,7 @@
         <!-- Custom styles for this template -->
         <link href="{% static "css/simple-sidebar.css" %}" rel="stylesheet">
         <script type="text/javascript"
-                src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=cu5hnzqfla"></script>
+                src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=u7319e28n1"></script>
 </head>
 
 <body>
@@ -71,13 +71,18 @@
 
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
-{#          임시로 해놓음 #}
-        <a class="nav-link collapsed" href="{% url "map:record" %}" >
-          <i class="fas fa-fw fa-wrench"></i>
-            인력 조회
-        </a>
+          <a class="nav-link" href="#collapsePages" data-toggle="collapse" data-targer="#collapsePages">
+              <i class="fas fa-fw fa-wrench"></i>
+              인력조회
+          </a>
+          <div id="collapsePages" class="collapse" aria-labelledby="headingPages">
+              <div class="bg-white py-2 collapse-inner rounded">
+                  <h6 class="collapse-header">목록</h6>
+                  <a class="collapse-item" href="{% url 'map:police-list'%}">시간별 담당 경찰 조회</a>
+                  <a class="collapse-item" href="{% url 'map:guard-list'%}">지킴이 조회</a>
+              </div>
+          </div>
       </li>
-
       <!-- Divider -->
       <hr class="sidebar-divider">
 
@@ -87,24 +92,24 @@
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
+{#      <li class="nav-item">#}
 {#        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">#}
 {#          <i class="fas fa-fw fa-folder"></i>#}
 {#          <span>Pages</span>#}
 {#        </a>#}
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="login.html">Login</a>
-            <a class="collapse-item" href="register.html">Register</a>
-            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-            <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Other Pages:</h6>
-            <a class="collapse-item" href="404.html">404 Page</a>
-            <a class="collapse-item" href="blank.html">Blank Page</a>
-          </div>
-        </div>
-      </li>
+{#        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">#}
+{#          <div class="bg-white py-2 collapse-inner rounded">#}
+{#            <h6 class="collapse-header">Login Screens:</h6>#}
+{#            <a class="collapse-item" href="login.html">Login</a>#}
+{#            <a class="collapse-item" href="register.html">Register</a>#}
+{#            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>#}
+{#            <div class="collapse-divider"></div>#}
+{#            <h6 class="collapse-header">Other Pages:</h6>#}
+{#            <a class="collapse-item" href="404.html">404 Page</a>#}
+{#            <a class="collapse-item" href="blank.html">Blank Page</a>#}
+{#          </div>#}
+{#        </div>#}
+{#      </li>#}
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
@@ -155,7 +160,7 @@
   <script src="{% static "vendor/datatables/dataTables.bootstrap4.min.js" %}"></script>
 
   <!-- Page level custom scripts -->
-  <script src="{% static "js/demo/datatables-demo.js" %}"></script>
+{#  <script src="{% static "js/demo/datatables-demo.js" %}"></script>#}
 
 <!-- Menu Toggle Script -->
 <script>
