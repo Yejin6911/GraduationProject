@@ -6,5 +6,5 @@ app_name = 'alarm'
 
 urlpatterns = [
     path('', views.Alert.as_view()),
-    path('siren/', views.siren, name='siren'),
+    path('siren/<int:location_pk>', views.siren, name='siren'),
 ]

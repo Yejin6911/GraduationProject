@@ -51,7 +51,7 @@ def main(request):
 def cctv(request, location_pk):
     # location = Location.objects.get(pk=location_pk)
     alarm = Alarm.objects.filter(location_pk=location_pk).get(checked=False)
-    return render(request, "map/cctv.html", {'alarm': alarm})
+    return render(request, "map/cctv.html", {'alarm': alarm, 'location_pk': location_pk})
 
 
 def check(request, pk):

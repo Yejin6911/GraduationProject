@@ -71,7 +71,7 @@
                         <h3>알람 발생 시간</h3>
                         <h4>{{ alarm.date }}</h4><br>
                         <div class="btn-group-vertical" style="width:100%;">
-                            <button type="button" id="siren" class="btn btn-danger">사이렌 울리기</button>
+                            <button type="button" id="siren" onclick = "location.href = '{% url "alarm:siren" location_pk %}'" class="btn btn-danger">사이렌 울리기</button>
                             <button type="button" id="send" class="btn btn-primary">메시지 보내기</button>
                             <button type="button" id="check" class="btn btn-success">확인완료</button>
 {#                            <button type="button" id="btn" class="btn btn-success" style="margin:0;">창 닫기</button>#}
@@ -113,7 +113,7 @@
   $("#siren").click(function(){
       $.ajax({
           type: "GET",
-          url: "{% url 'alarm:siren' %}",
+          url: "{% url 'alarm:siren' location_pk %}",
           success: function(response){
               alert('사이렌을 울렸습니다.');
           },
