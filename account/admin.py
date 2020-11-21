@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from account.models import CustomUser, Station, Guard
+from account.models import Profile, Station, Guard
 from import_export.admin import ImportExportMixin
 
-admin.site.register(CustomUser)
+admin.site.register(Profile)
 
 class StationAdmin(ImportExportMixin, admin.ModelAdmin):
     pass

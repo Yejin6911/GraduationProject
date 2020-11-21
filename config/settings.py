@@ -40,10 +40,11 @@ INSTALLED_APPS = [
     'alarm',
     'account',
     'import_export',
-    'django_otp'
+    'django_otp',
+    'django_otp.plugins.otp_totp',
 ]
 
-AUTH_USER_MODEL = 'account.CustomUser'
+AUTH_USER_MODEL = 'auth.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -138,3 +140,4 @@ SESSION_SAVE_EVERY_REQUEST = True
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
+LOGIN_REDIRECT_URL = '/'

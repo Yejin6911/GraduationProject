@@ -1,6 +1,3 @@
-import json
-from sqlite3.dbapi2 import Timestamp
-
 import base64
 import hashlib
 import hmac
@@ -9,17 +6,10 @@ import requests
 import json
 from . import keys
 
-from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-
-import os
-
 from django.urls import reverse
-from django.views import View
-from django.views.generic import TemplateView
 
-from account.models import CustomUser, Guard, Station
+from account.models import Profile, Guard, Station
 from alarm.models import Alarm
 
 # path = str(os.getcwd()) + "/map/static/data/"
@@ -38,12 +28,11 @@ from alarm.models import Alarm
 #     data += l[1:]
 from .models import Location
 
-
 def main(request):
     if not request.user.is_authenticated:
         return redirect(reverse("account:login"))
     else:
-        current_user = CustomUser.objects.get(username=request.user.username)
+        current_user = Profile.objects.get(user=request.user)
         # data = Location.objects.filter(station=current_user.location)
         alarms = Alarm.objects.filter(checked=False).filter(station=current_user.station.name)
         return render(request, "map/main.html", {'alarms':alarms})
@@ -62,22 +51,22 @@ def check(request, pk):
 
 
 def record(request):
-    current_user = CustomUser.objects.get(username=request.user.username)
+    current_user = Profile.objects.get(user=request.user)
     alarms = Alarm.objects.filter(station=current_user.station.name)
     return render(request, "map/record.html", {'alarms':alarms, 'station': current_user.station.name})
 
 def police_list(request):
-    current_user = CustomUser.objects.get(username=request.user.username)
-    polices = CustomUser.objects.filter(station=current_user.station)
+    current_user = Profile.objects.get(user=request.user)
+    polices = Profile.objects.filter(station=current_user.station)
     return render(request, "map/police_list.html", {'polices':polices,'station':current_user.station.name})
 
 def guard_list(request):
-    current_user = CustomUser.objects.get(username=request.user.username)
+    current_user = Profile.objects.get(user=request.user)
     guards = Guard.objects.filter(station=current_user.station)
     return render(request, "map/guard_list.html", {'guards':guards, 'station':current_user.station.name})
 
 def make_signature(string):
-    secret_key = bytes("DHK4IChkpNFoY2YNllWdPg2LQzBnHDLn4ts9USZu", 'UTF-8')
+    secret_key = bytes(keys.secret_key, 'UTF-8')
     string = bytes(string, 'UTF-8')
     string_hmac = hmac.new(secret_key, string, digestmod=hashlib.sha256).digest()
     string_base64 = base64.b64encode(string_hmac).decode('UTF-8')

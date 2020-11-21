@@ -2,8 +2,8 @@ import json
 import requests
 
 # url = 'http://18.180.217.31:8080/Alert/'
-# url = 'http://127.0.0.1:8000/Alert/'
-url = 'http://32bb5c34a862.ngrok.io/Alert/'
+url = 'http://127.0.0.1:8000/Alert/'
+# url = 'http://32bb5c34a862.ngrok.io/Alert/'
 
 client = requests.session()
 client.get(url)
@@ -20,8 +20,8 @@ print(cookies)
 #
 # print(csrftoken)
 data = {
-    'latitude': 37.546723,
-    'longitude': 126.868822,
+    'latitude': 37.5616185,
+    'longitude': 126.9437005,
     #'csrfmiddlewaretoken': csrftoken,
 }
 data = json.dumps(data)
