@@ -12,6 +12,30 @@
 ### ERD(Entity Relationship Diagram)
 ![image](https://user-images.githubusercontent.com/44834680/103102253-8a887180-465e-11eb-94f4-dc012d1652c1.png)
 
+## 구현 App 종류 별 기능
+### 1. Account
+|url|기능|
+|---|---|
+|/account/login|사용자 로그인|
+|/account/logout|사용자 로그아웃|
+
+### 2. Map
+|url|기능|
+|---|---|
+|/map|알람발생(마커 생성)|
+|/map/cctv/<int:location_pk>|알람발생 위치 cctv 화면 불러오기|
+|/map/cctv/<int:pk>|해당 알람 확인완료 처리|
+|/map/record|알람 발생 기록 조회|
+|/map/lists/police|담당 경찰관 조회|
+|/map/lists/gurard|담당 지킴이 조회|
+|/map/send/<int:alarm_pk>|메세지 보내기 기능|
+
+### 3. Alarm
+|url|기능|
+|---|---|
+|/alarm|알람생성
+|/alarm/siren/<int:location_pk>|사이렌 요청 전송
+
 ## 준비 사항
 
 1. 가상환경 생성
@@ -75,30 +99,4 @@ $ python manage.py runserver
 파일 선택 -> "map->static->data" 아래의 해당 경찰서 파일 선택 -> csv Format 설정 -> Submit
 
 ![image](https://user-images.githubusercontent.com/44834680/103104196-1d2e0e00-4669-11eb-9f56-3ad689c313aa.png)
-
-## 구현 App 종류 별 기능
-### 1. Account
-|url|기능|
-|---|---|
-|/account/login|사용자 로그인|
-|/account/logout|사용자 로그아웃|
-
-### 2. Map
-|url|기능|
-|---|---|
-|/map|알람발생(마커 생성)|
-|/map/cctv/<int:location_pk>|알람발생 위치 cctv 화면 불러오기|
-|/map/cctv/<int:pk>|해당 알람 확인완료 처리|
-|/map/record|알람 발생 기록 조회|
-|/map/lists/police|담당 경찰관 조회|
-|/map/lists/gurard|담당 지킴이 조회|
-|/map/send/<int:alarm_pk>|메세지 보내기 기능|
-
-### 3. Alarm
-|url|기능|
-|---|---|
-|/alarm|알람생성
-|/alarm/siren/<int:location_pk>|사이렌 요청 전송
-
-
 
