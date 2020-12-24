@@ -23,11 +23,10 @@ $ python -m venv .myvenv
 ```
 $ source .myvenv/bin/activate
 ```
-3. 확인
+3. myvenv 디렉터리 안에 있는 bin/python이 사용되는지 확인.
 ```
 $ which python
 ```
-which 커맨드를 통해 myvenv 디렉터리 안에 있는 bin/python이 사용되는지 확인.
 
 4. 가상 환경에 패키지 설치
 ```
