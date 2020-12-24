@@ -79,13 +79,13 @@ $ python manage.py runserver
 ## 구현 App 종류 별 기능
 ### 1. Account
 |url|기능|
-|—|—|
+|—--|—--|
 |/account/login|사용자 로그인|
 |/account/logout|사용자 로그아웃|
 
 ### 2. Map
 |url|기능|
-|—|—|
+|—--|—--|
 |/map|알람발생(마커 생성)|
 |/map/cctv/<int:location_pk>|알람발생 위치 cctv 화면 불러오기|
 |/map/cctv/<int:pk>|해당 알람 확인완료 처리|
@@ -96,6 +96,6 @@ $ python manage.py runserver
 
 ### 3. Alarm
 |url|기능|
-|—|—|
+|—--|--—|
 |/alarm|알람생성
 |/alarm/siren/<int:location_pk>|사이렌 요청 전송
