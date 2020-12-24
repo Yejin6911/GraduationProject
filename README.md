@@ -33,9 +33,22 @@ $ which python
 $ pip install -r requirements.txt
 ```
 
+5. Graduation/map 아래에 keys.py 생성
+```
+service_id = "{Naver SENS service_id}
+access_key = "{API 인증키 Access Key ID}"
+secret_key = "{API 인증키 Secret Key}"
+```
+6. migration
+``
+$ python manage.py makemigrations
+$ python manage.py migrate
+``
+
 ## 실행
 ```
 $ python manage.py runserver
     
 ```
+
 
