@@ -98,7 +98,7 @@ $ python manage.py runserver
 
 파일 선택 -> "map->static->data" 아래의 해당 경찰서 파일 선택 -> csv Format 설정 -> Submit
 
-![image](https://user-images.githubusercontent.com/44834680/103104196-1d2e0e00-4669-11eb-9f56-3ad689c313aa.png)
+![image](https://user-images.githubusercontent.com/44834680/103104574-70a15b80-466b-11eb-84a6-2cfd67db3eb4.png)
 
 
 ## [딥러닝 모델 보러가기](https://github.com/jessica9685/DOROCI)
