@@ -35,7 +35,7 @@ $ pip install -r requirements.txt
 
 5. Graduation/map 아래에 keys.py 생성
 ```
-service_id = "{Naver SENS service_id}
+service_id = "{Naver SENS service_id}"
 access_key = "{API 인증키 Access Key ID}"
 secret_key = "{API 인증키 Secret Key}"
 ```
@@ -51,4 +51,52 @@ $ python manage.py runserver
     
 ```
 
+### OTP 발급 디바이스 등록
+*dadmin : 기존 admin 페이지
+*admin: 디바이스 정보를 등록할 수 있는 어드민 페이지.
 
+1. [admin 페이지](http://localhost:8000/admin)에서 기기 등록을 위한 TOTP Device 정보 등록(admin)
+![image](https://user-images.githubusercontent.com/44834680/103103880-772dd400-4667-11eb-87cf-f95ae7ede670.png)
+
+2. [dadmin 페이지](http://localhost:8000/dadmin/otp_totp/totpdevice/)에서 QRCode를 발급하고 사용자가 앱(OTPAuth)으로 QRCode를 등록함으로써 OTP 발급을 위한 준비 완료.
+![image](https://user-images.githubusercontent.com/44834680/103104006-2cf92280-4668-11eb-8986-e37c640ad269.png)
+
+### 데이터 등록
+
+1. [dadmin-> map->location](http://localhost:8000/dadmin/account/station/)페이지에서 '경찰서 목록'을 Import 해줌.
+![image](https://user-images.githubusercontent.com/44834680/103104285-9e85a080-4669-11eb-8c61-f78cccd216ff.png)
+파일 선택 -> "map->static->data" 아래의 '경찰서 목록' 파일 선택 -> csv Format 설정 -> Submit
+![image](https://user-images.githubusercontent.com/44834680/103104307-b78e5180-4669-11eb-931a-5b92003e6820.png)
+
+2. [dadmin-> map->location](http://localhost:8000/dadmin/map/location/)페이지에서 data를 import 해줘야 함.
+
+![image](https://user-images.githubusercontent.com/44834680/103104081-a264f300-4668-11eb-8de6-7784d536f463.png)
+
+파일 선택 -> "map->static->data" 아래의 해당 경찰서 파일 선택 -> csv Format 설정 -> Submit
+
+![image](https://user-images.githubusercontent.com/44834680/103104196-1d2e0e00-4669-11eb-9f56-3ad689c313aa.png)
+
+
+## 구현 App 종류 별 기능
+### 1. Account
+|url|기능|
+|—|—|
+|/account/login|사용자 로그인|
+|/account/logout|사용자 로그아웃|
+
+### 2. Map
+|url|기능|
+|—|—|
+|/map|알람발생(마커 생성)|
+|/map/cctv/<int:location_pk>|알람발생 위치 cctv 화면 불러오기|
+|/map/cctv/<int:pk>|해당 알람 확인완료 처리|
+|/map/record|알람 발생 기록 조회|
+|/map/lists/police|담당 경찰관 조회|
+|/map/lists/gurard|담당 지킴이 조회|
+|/map/send/<int:alarm_pk>|메세지 보내기 기능|
+
+### 3. Alarm
+|url|기능|
+|—|—|
+|/alarm|알람생성
+|/alarm/siren/<int:location_pk>|사이렌 요청 전송
