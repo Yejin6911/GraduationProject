@@ -40,10 +40,10 @@ access_key = "{API 인증키 Access Key ID}"
 secret_key = "{API 인증키 Secret Key}"
 ```
 6. migration
-``
+```
 $ python manage.py makemigrations
 $ python manage.py migrate
-``
+```
 
 ## 실행
 ```
