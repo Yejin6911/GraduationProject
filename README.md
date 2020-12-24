@@ -6,7 +6,8 @@
 도로시는 딥러닝을 통한 음성데이터와 CCTV를 활용해 자동으로 위급상황을 인지하고 경찰의 빠르고 정확한 판단과 출동을 돕는 스마트 도로 관제서비스이다.
 
 ### 시스템 구조
-![image](https://user-images.githubusercontent.com/44834680/103102184-32516f80-465e-11eb-9b0f-ccbf28fa6c37.png)
+![image](https://user-images.githubusercontent.com/44834680/103102385-084c7d00-465f-11eb-99ad-60d1bf606005.png)
+
 
 ### ERD(Entity Relationship Diagram)
 ![image](https://user-images.githubusercontent.com/44834680/103102253-8a887180-465e-11eb-94f4-dc012d1652c1.png)
