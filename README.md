@@ -76,7 +76,6 @@ $ python manage.py runserver
 
 ![image](https://user-images.githubusercontent.com/44834680/103104196-1d2e0e00-4669-11eb-9f56-3ad689c313aa.png)
 
-
 ## 구현 App 종류 별 기능
 ### 1. Account
 |url|기능|
