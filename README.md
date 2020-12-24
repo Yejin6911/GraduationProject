@@ -12,3 +12,30 @@
 ### ERD(Entity Relationship Diagram)
 ![image](https://user-images.githubusercontent.com/44834680/103102253-8a887180-465e-11eb-94f4-dc012d1652c1.png)
 
+## 준비 사항
+
+1. 가상환경 생성
+```
+$ cd [프로젝트 디렉토리]
+$ python -m venv .myvenv
+```
+2. 가상환경 실행
+```
+$ source .myvenv/bin/activate
+```
+3. 확인
+```
+$ which python
+```
+which 커맨드를 통해 myvenv 디렉터리 안에 있는 bin/python이 사용되는지 확인.
+
+4. 가상 환경에 패키지 설치
+```
+pip install requests
+```
+
+## 실행
+```
+$ python manage.py runserver
+    
+```
