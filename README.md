@@ -101,6 +101,6 @@ $ python manage.py runserver
 ![image](https://user-images.githubusercontent.com/44834680/103104196-1d2e0e00-4669-11eb-9f56-3ad689c313aa.png)
 
 
-## [Raspberry pi 모델 보러가기](https://github.com/jessica9685/DOROCI)
+## [딥러닝 모델 보러가기](https://github.com/jessica9685/DOROCI)
 
 
