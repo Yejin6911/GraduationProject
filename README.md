@@ -30,7 +30,7 @@ $ which python
 
 4. 가상 환경에 패키지 설치
 ```
-pip install requests
+$ pip install -r requirements.txt
 ```
 
 ## 실행
